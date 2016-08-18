@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<% include partials/header %>
+</head>
+<body class="slidshow">
+  <div id="slickcontent">
+    <% files.forEach(function(file) { %>
+      <div class="slide">
+        <img data-lazy="<%=file%>" alt="" />
+      </div>
+    <% }); %>
+  </div>
+</body>
+<% include partials/footer %>
+</html>

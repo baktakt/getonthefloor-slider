@@ -6,6 +6,7 @@ var server = http.createServer(app).listen(process.env.PORT || 4000);
 var io = require('socket.io')(server);
 var path = require('path');
 var request = require('request');
+var fs = require('fs');
 
 var eventCode;
 
@@ -15,9 +16,11 @@ app.set('view engine', 'ejs'); // use either jade or ejs
 // instruct express to server up static assets
 app.use(express.static('public'));
 
-// set routes
-app.get('/', function(req, res) {
-  res.render('index');
+fs.readdirSync('./controllers').forEach(function (file) {
+  if(file.substr(-3) == '.js') {
+      route = require('./controllers/' + file);
+      route.controller(app);
+  }
 });
 
 console.log('server is running on port' +  process.env.PORT || 4000);
