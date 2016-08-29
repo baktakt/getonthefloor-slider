@@ -3,7 +3,7 @@ $(document).ready(function() {
       fade: true,
       autoplay: true,
       autoplaySpeed: 4000,
-      pauseOnHover: false,
+      pauseOnHover: true,
       speed: 1000,
       dots: false,
       prevArrow: false,
@@ -12,38 +12,30 @@ $(document).ready(function() {
       pauseOnHover: false,
       pauseOnFocue: false
   });
-  $('#open-slideshow').click(function () {
-    var eventCode = $('#eventcode').val();
-    if(eventCode) {
-      window.location.href = '/' + eventCode;
+  $('#slickcontent').on('afterChange', function(event, slick, currentSlide){
+    var currentSlideType = $(slick.$slides.get(currentSlide)).data('type');
+    var nextSlideType = $(slick.$slides.get(currentSlide)).data('type');
+    if (currentSlideType === 'video') {
+      $('#slickcontent').slick('slickPause');
+      var video = $('.slick-current').find('video');
+      video.bind('ended', function(){
+        $('#slickcontent').slick('slickNext');
+      });
+      video.get(0).play();
     }
-  });
-  $('input').keypress(function (e) {
-    if (e.which == 13) {
-      var eventCode = $('#eventcode').val();
-      if(eventCode) {
-        window.location.href = '/' + eventCode;
-      }
-      return false;    //<---- Add this line
-    }
-  });
 
-  var socket = io();
-  setInterval(pollForNewImages, 180000);
 
-  socket.on('newdata', function(data) {
-    var numberOfImages = $('.slick-slide').length;
-    var imageUrlOfFirstSlide = $('#firstimage').val();
-    if(imageUrlOfFirstSlide !== data.images[0].imageUrl) {
-      window.location.reload();
-    }
   });
 
-  function pollForNewImages() {
-    var eventCode = $('#eventcode').val();
-    if(eventCode) {
-      socket.emit('poll', eventCode);
+  $('#slickcontent').on('beforeChange', function(event, slick, currentSlide){
+    var currentSlideType = $(slick.$slides.get(currentSlide)).data('type');
+    if (currentSlideType === 'video') {
+      $('#slickcontent').slick('slickPause');
+      var video = $('.slick-current').find('video');
+      video.get(0).pause();
     }
-  };
-  pollForNewImages();
+
+
+  });
+
 });

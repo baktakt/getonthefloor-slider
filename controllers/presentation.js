@@ -1,14 +1,19 @@
 var fs = require('fs'),
-path = require('path');
+fileExtension = require('file-extension');
 
-module.exports.controller = function(app) {
+module.exports.controller = function(app, path) {
   app.get('/presentation/:id', function(req, res) {
-      // any logic goes here
+
+    SlideType = {
+      IMAGE : 'image',
+      VIDEO : 'video'
+    }
+
       presentationId = req.params.id;
 
       var path = './public/presentations/' + presentationId + '/';
 
-      function getFiles (dir, id, files_){
+      function getSlides (dir, id, files_){
           files_ = files_ || [];
           var files = fs.readdirSync(dir);
           for (var i in files){
@@ -17,14 +22,28 @@ module.exports.controller = function(app) {
                   getFiles(name, files_);
               } else {
                   var pathToSlide = '/presentations/' + id + '/' + files[i];
-                  files_.push(pathToSlide);
+                  files_.push({'path': pathToSlide, 'type': getFileType(files[i])});
               }
           }
           return files_;
       }
+    function getFileType(fileName) {
+      console.log(fileName);
+      var fileExt = fileExtension(fileName);
+      switch (fileExt) {
+        case 'mp4':
+          return SlideType.VIDEO
+          break;
+        case 'jpg':
+          return SlideType.IMAGE
+          break;
+        default:
+          return SlideType.IMAGE
+      }
+    }
 
-      var files = getFiles(path, presentationId);
-      console.log('files in ' + path + " = " + files);
-      res.render('presentation', { 'files': files })
+      var slides = getSlides(path, presentationId);
+      console.log('files in ' + path + " = " + slides);
+      res.render('presentation', { 'slides': slides })
   });
 }
