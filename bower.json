@@ -1,0 +1,21 @@
+{
+  "name": "photobooth-slider",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "Johan <baktakt@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/baktakt/getonthefloor-slider",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.4"
+  }
+}
