@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<% include partials/header %>
+</head>
+<body class="slideshow">
+  <div id="slickcontent" class="background">
+    <% slides.forEach(function(slide) { %>
+      <%if(slide.type == 'video') { %>
+        <div id="slide-video" data-type="<%=slide.type%>">
+            <video autoplay controls id="video-background">
+                <source src="<%=slide.path%>" />
+            </video>
+        </div>
+      <%} else {%>
+        <div class="slide" data-type="<%=slide.type%>" style="background-image:url('<%=slide.path%>')">
+
+        </div>
+      <%}%>
+
+    <% }); %>
+  </div>
+</body>
+<% include partials/footer %>
+</html>
