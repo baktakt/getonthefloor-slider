@@ -1,5 +1,6 @@
 var fs = require('fs'),
-fileExtension = require('file-extension');
+fileExtension = require('file-extension'),
+appRoot = require('app-root-path');
 
 module.exports.controller = function(app, path) {
   app.get('/presentation/:id', function(req, res) {
@@ -10,9 +11,9 @@ module.exports.controller = function(app, path) {
     }
 
       presentationId = req.params.id;
-      console.log(__dirname);
-      var path = __dirname + '/../public/presentations/' + presentationId + '/';
-
+      
+      var path = appRoot + '/../public/presentations/' + presentationId + '/';
+      console.log(path);
       function getSlides (dir, id, files_){
           files_ = files_ || [];
           var files = fs.readdirSync(dir);
