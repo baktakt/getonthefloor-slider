@@ -3,7 +3,7 @@ module.exports = function(grunt) {
     sass: {
       dist: {
         files: {
-          '../public/css/style.css' : 'src/scss/application.scss'
+          'public/css/style.css' : 'src/scss/application.scss'
         }
       }
     },
@@ -29,18 +29,18 @@ module.exports = function(grunt) {
     concat: {
       main: {
         src: ['src/js/*.js'],
-        dest: '../public/scripts/main.js',
+        dest: 'public/scripts/main.js',
       },
       vendor: {
         src: ['src/js/vendor/*.js'],
-        dest: '../public/scripts/vendor.js',
+        dest: 'public/scripts/vendor.js',
       },
     },
     uglify: {
       dist: {
         files: {
-          '../public/scripts/main.min.js': ['../public/scripts/main.js'],
-          '../public/scripts/vendor.min.js': ['../public/scripts/vendor.js'],
+          'public/scripts/main.min.js': ['public/scripts/main.js'],
+          'public/scripts/vendor.min.js': ['public/scripts/vendor.js'],
         }
       }
     },
@@ -48,9 +48,9 @@ module.exports = function(grunt) {
       target: {
         files: [{
           expand: true,
-          cwd: '../public/css',
+          cwd: 'public/css',
           src: ['style.css', '!*.min.css'],
-          dest: '../public/css',
+          dest: 'public/css',
           ext: '.min.css'
         }]
       }
@@ -67,19 +67,19 @@ module.exports = function(grunt) {
         expand: true,
         cwd: 'src/fonts',
         src: '**',
-        dest: '../public/css/fonts',
+        dest: 'public/css/fonts',
       },
       loader: {
         expand: true,
         cwd: 'src/img',
         src: 'ajax-loader.gif',
-        dest: '../public/css/'
+        dest: 'public/css/'
       },
       img: {
         expand: true,
         cwd: 'src/img',
         src: '**',
-        dest: '../public/images/'
+        dest: 'public/images/'
       },
     },
   });

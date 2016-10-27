@@ -7,7 +7,7 @@ var io = require('socket.io')(server);
 var path = require('path');
 var request = require('request');
 var fs = require('fs');
-var appRoot = require('app-root-path');
+var homeDir = require('home-dir').directory;
 
 var eventCode;
 
@@ -15,7 +15,9 @@ var eventCode;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs'); // use either jade or ejs
 // instruct express to server up static assets
-app.use(express.static(appRoot + '/../public'));
+app.use('/presentations', express.static(homeDir + '/presentations'));
+app.use(express.static(__dirname + '/public'));
+console.log(__dirname + '/public' + '\n');
 
 fs.readdirSync(__dirname + '/controllers').forEach(function (file) {
   if(file.substr(-3) == '.js') {

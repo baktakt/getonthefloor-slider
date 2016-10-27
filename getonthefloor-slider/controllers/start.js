@@ -1,7 +1,7 @@
 
 var fs = require('fs'),
 path = require('path'),
-appRoot = require('app-root-path');
+homeDir = require('home-dir').directory;
 
 module.exports.controller = function(app) {
   app.get('/', function(req, res) {
@@ -12,8 +12,8 @@ module.exports.controller = function(app) {
           return fs.statSync(srcpath + file).isDirectory();
         });
       }
-      var path = appRoot + '/../public/presentations/';
-      var folders = getDirectories(path);
+      var srcPath = path.join( homeDir, '/presentations/');
+      var folders = getDirectories(srcPath);
       res.render('start', { 'folders': folders })
   });
 }

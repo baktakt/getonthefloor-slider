@@ -1,6 +1,6 @@
 var fs = require('fs'),
 fileExtension = require('file-extension'),
-appRoot = require('app-root-path');
+homeDir = require('home-dir').directory;
 
 module.exports.controller = function(app, path) {
   app.get('/presentation/:id', function(req, res) {
@@ -12,7 +12,7 @@ module.exports.controller = function(app, path) {
 
       presentationId = req.params.id;
       
-      var path = appRoot + '/../public/presentations/' + presentationId + '/';
+      var path = homeDir + '/presentations/' + presentationId + '/';
       console.log(path);
       function getSlides (dir, id, files_){
           files_ = files_ || [];
@@ -34,10 +34,8 @@ module.exports.controller = function(app, path) {
       switch (fileExt) {
         case 'mp4':
           return SlideType.VIDEO
-          break;
         case 'jpg':
           return SlideType.IMAGE
-          break;
         default:
           return SlideType.IMAGE
       }
